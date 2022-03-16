@@ -30,6 +30,14 @@ public class UserController {
         return new ResponseEntity(this.userService.save(userModel), HttpStatus.CREATED);
     }
 
+    @PostMapping("/email")
+    public ResponseEntity<UserModel> saveByApi(@RequestBody @Valid UserDto userDto) {
+        var userModel = new UserModel();
+        BeanUtils.copyProperties(userDto, userModel);
+        return new ResponseEntity(this.userService.saveByApi(userModel), HttpStatus.CREATED);
+    }
+
+
     @GetMapping
     public ResponseEntity<List<UserModel>> findAll(@PageableDefault(page = 0, size = 5, sort = "userId", direction = Sort.Direction.DESC) Pageable pageable) {
         return new ResponseEntity(this.userService.findAll(pageable), HttpStatus.OK);
